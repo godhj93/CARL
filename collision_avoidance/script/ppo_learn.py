@@ -329,7 +329,7 @@ class PPOagent(object):
                     
                         
                         next_state, reward, done, _ = self.env.step(action_airsim, global_step=global_step)
-                        print(f"Reward: {reward}")
+                        
                         with self.train_summary_writer.as_default():
                             tf.summary.scalar('action_vx', action[0], step=global_step)
                             tf.summary.scalar('action_w', action[1], step=global_step)

@@ -19,9 +19,9 @@ def main():
     env = AirSimDroneEnv(ip_address='127.0.0.1') 
 
     agent = PPOagent(env) # PPO 에이전트 객체
-    print("Done")
+    
     # 학습 진행
-    # agent.train(max_episode_num)
+    agent.train(max_episode_num)
 
     # # 학습 결과 도시
     # agent.plot_result()

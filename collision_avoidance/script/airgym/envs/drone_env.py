@@ -40,7 +40,7 @@ class AirSimDroneEnv(AirSimEnv):
     def __del__(self):
         self.drone.reset()
 
-    def _setup_flight(self,init_pos=(0.0,0.0,0.0)):
+    def _setup_flight(self,init_pos=(0.0,0.0,-5.0)):
 
         self.drone.reset()
         self.drone.enableApiControl(True)
@@ -50,20 +50,21 @@ class AirSimDroneEnv(AirSimEnv):
        
         '''Initializing orientations'''
         # position = [init_x, init_y, 20]
-        pose.position.x_val = 100#init_x
-        pose.position.y_val = 0#init_y
-        pose.position.z_val = -5
+ 
        
-        pose.orientation = airsim.utils.to_quaternion(0, 0, 90)
-        while True:
-            mavState = self.GetMavStatesInput()
-            self.drone.moveByVelocityAsync(0, 0, 0.1, 1.0).join()             
-            self.drone.simSetVehiclePose(pose=airsim.Pose(airsim.Vector3r(init_pos[0], init_pos[1], init_pos[2]), airsim.Quaternionr(0, 0, 0, 1)), 
+        x,y,z,w = airsim.utils.to_quaternion(0, 0, 180)
+        self.drone.moveByVelocityAsync(0, 0, 0.1, 1.0).join()             
+        self.drone.simSetVehiclePose(pose=airsim.Pose(airsim.Vector3r(init_pos[0], init_pos[1], init_pos[2]), airsim.Quaternionr(x, y, z, w)), 
                                         ignore_collision=True)
-            error = get_position_error(mavState["pos"], init_pos)
-            if error < 0.1:
-                break 
-        print("Finished resetting drone.")
+        # while True:
+        #     mavState = self.GetMavStatesInput()
+        #     self.drone.moveByVelocityAsync(0, 0, 0.1, 1.0).join()             
+        #     self.drone.simSetVehiclePose(pose=airsim.Pose(airsim.Vector3r(init_pos[0], init_pos[1], init_pos[2]), airsim.Quaternionr(0, 0, 0, 1)), 
+        #                                 ignore_collision=True)
+        #     error = get_position_error(mavState["pos"], init_pos)
+        #     if error < 0.1:
+        #         break 
+        # print("Finished resetting drone.")
         # self.drone.simSetVehiclePose(pose, True)
         
         # self.drone.moveToPositionAsync(pose.position.x_val, pose.position.y_val, -5, 10).join()

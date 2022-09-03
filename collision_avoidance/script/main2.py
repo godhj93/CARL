@@ -32,6 +32,7 @@ def main():
     done = False
     i=0
     while not done:
+
         i += 1
         t = time.time()
 
@@ -42,7 +43,9 @@ def main():
             x = pos_x,
             y = pos_y,
             z = -5.0,
-            velocity = 5.0).join()
+            velocity = 3.0,
+            drivetrain= airsim.DrivetrainType.ForwardOnly, 
+            yaw_mode = airsim.YawMode(is_rate=False, yaw_or_rate=np.arctan2(pos_x, pos_y)), ).join()
             # timeout_sec=1,
             # drivetrain= airsim.DrivetrainType.ForwardOnly, 
             # yaw_mode = airsim.YawMode(is_rate=True, yaw_or_rate=np.arctan2(pos_x, pos_y)), 

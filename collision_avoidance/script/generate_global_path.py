@@ -19,8 +19,8 @@ def main():
     mpl_ros_caller = rospy.ServiceProxy("/test_primitive/trajectory_generation_service", Traj_call)
 
 
-    st = (20.0, 15.0,5.0)
-    g = (-19.5, -20.782,5.0)
+    st = (21.0, 22.0, 5.0)
+    g = (-21.5, -22.0, 5.0)
     # g = (0., 0., 5.0)
 
     trajectory_info, trajectory_done = GetTrajectory(mpl_ros_caller, st, g)
